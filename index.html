@@ -1,0 +1,127 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CatStore</title>
+    <style>
+        body {
+            background-color: #1e3a8a;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin: 10px 0;
+        }
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        .description {
+            font-size: 1rem;
+            line-height: 1.5;
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
+        .app-list {
+            text-align: left;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .app-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .app-item:last-child {
+            border-bottom: none;
+        }
+        .app-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .app-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+        .download-btn {
+            background-color: #3b82f6;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .download-btn:hover {
+            background-color: #2563eb;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="Images/catstore.png" alt="CatStore Logo" class="logo">
+        <h1>CatStore</h1>
+        <p class="tagline">Make your Fire, Your Fire</p>
+        <p class="description">CatStore is a app store built for Fire tablets that let's you download actual useful apps so you can grab what you need without the crappy stupid Amazon Appstore.</p>
+        
+        <div class="app-list">
+            <div class="app-item">
+                <div class="app-info">
+                    <img src="Images/launcher-hijack.png" alt="Launcher Hijack" class="app-icon">
+                    <span>Launcher Hijack</span>
+                </div>
+                <a href="https://raw.githubusercontent.com/KitNeko/CatStore/main/Apps/launcher-hijack.apk" class="download-btn">Download</a>
+            </div>
+            <div class="app-item">
+                <div class="app-info">
+                    <img src="Images/firefox.png" alt="Firefox" class="app-icon">
+                    <span>Firefox</span>
+                </div>
+                <a href="https://www.dropbox.com/scl/fi/5jou7sy8mf4hhx1yx4bj0/firefox.apk?rlkey=h65dpf3mtfpmmz8uvr5qo524u&st=jgdclijs&dl=1" class="download-btn">Download</a>
+            </div>
+            <div class="app-item">
+                <div class="app-info">
+                    <img src="Images/opera-mini.png" alt="Opera Mini" class="app-icon">
+                    <span>Opera Mini</span>
+                </div>
+                <a href="https://raw.githubusercontent.com/KitNeko/CatStore/main/Apps/opera-mini.apk" class="download-btn">Download</a>
+            </div>
+            <div class="app-item">
+                <div class="app-info">
+                    <img src="Images/dolphin.png" alt="Dolphin Emulator" class="app-icon">
+                    <span>Dolphin Emulator</span>
+                </div>
+                <a href="https://raw.githubusercontent.com/KitNeko/CatStore/main/Apps/dolphin.apk" class="download-btn">Download</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+```
