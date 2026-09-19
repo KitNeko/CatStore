@@ -8,3 +8,12 @@
 # Credits
 Launcher Hijack
 https://github.com/BaronKiko/LauncherHijack
+
+Dolphin Emulator
+https://dolphin-emu.org/
+
+Opera Mini
+https://www.opera.com/mini
+
+Firefox
+https://www.firefox.com
