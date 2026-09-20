@@ -5,118 +5,281 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CatStore</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
         body {
-            background-color: #1e3a8a;
+            background-color: #0b0b0b;
             color: #ffffff;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 40px 20px;
+            overflow-x: hidden;
+            display: flex;
+            height: 100vh;
         }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
+
+        .kindle-main {
+            flex-grow: 1;
+            background: linear-gradient(to bottom, #161616 0%, #0d0d0d 100%);
+            display: flex;
+            flex-direction: column;
+            padding: 24px 36px;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            border-right: 2px solid #222;
         }
-        .logo {
-            width: 120px;
-            height: 120px;
-            border-radius: 24px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-        }
-        h1 {
-            font-size: 2.5rem;
-            margin: 10px 0;
-        }
-        .tagline {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 30px;
-        }
-        .description {
-            font-size: 1rem;
-            line-height: 1.5;
-            opacity: 0.8;
-            margin-bottom: 40px;
-        }
-        .app-list {
-            text-align: left;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 20px;
-        }
-        .app-item {
+
+        .header-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 16px;
         }
-        .app-item:last-child {
-            border-bottom: none;
+
+        .title-area {
+            display: flex;
+            align-items: baseline;
+            gap: 20px;
         }
-        .app-info {
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .tagline {
+            font-size: 0.95rem;
+            color: #ff9900;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        .switcher-pill {
+            display: flex;
+            background: #111;
+            border-radius: 6px;
+            border: 1px solid #333;
+            padding: 3px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
+        }
+
+        .switch-btn {
+            background: transparent;
+            border: none;
+            color: #888;
+            padding: 6px 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .switch-btn.active {
+            background: linear-gradient(to bottom, #444, #2a2a2a);
+            color: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+
+        .store-link {
+            color: #ddd;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+        .store-link:hover {
+            color: #ff9900;
+        }
+
+        .shelf-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .shelf {
+            background: linear-gradient(to bottom, rgba(25,25,25,0.7) 0%, rgba(10,10,10,0.9) 100%);
+            border-bottom: 4px solid #050505;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 25px 20px 35px 20px;
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+            position: relative;
+            box-shadow: inset 0 15px 15px -10px rgba(0,0,0,0.7);
+        }
+
+        .app-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            width: 90px;
+            position: relative;
+            transition: transform 0.1s ease;
+        }
+
+        .app-card:active {
+            transform: scale(0.95);
+        }
+
+        .app-icon-wrapper {
+            position: relative;
+            width: 76px;
+            height: 76px;
+            margin-bottom: 10px;
+        }
+
+        .app-icon {
+            width: 100%;
+            height: 100%;
+            border-radius: 14px;
+            object-fit: cover;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.15);
+            background: #222;
+        }
+
+        .badge {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            background-color: #262626;
+            color: #ccc;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: center;
+            font-size: 11px;
+            border: 2px solid #111;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
-        .app-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            object-fit: cover;
+
+        .app-name {
+            color: #d1d1d1;
+            font-size: 0.85rem;
+            text-align: center;
+            line-height: 1.2;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            width: 100%;
         }
-        .download-btn {
-            background-color: #3b82f6;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 6px;
+
+        .kindle-sidebar {
+            width: 70px;
+            background: #0f0f0f;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 25px 0;
+            border-left: 1px solid #1c1c1c;
+        }
+
+        .sidebar-group {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .sidebar-btn {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            transition: background 0.2s, color 0.2s;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 0.9rem;
         }
-        .download-btn:hover {
-            background-color: #2563eb;
+
+        .sidebar-btn:hover {
+            background: #1a1a1a;
+            color: #fff;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <img src="Images/catstore.png" alt="CatStore Logo" class="logo">
-        <h1>CatStore</h1>
-        <p class="tagline">Make your Fire, Your Fire</p>
-        <p class="description">CatStore is a app store built for Fire tablets that let's you download actual useful apps so you can grab what you need without the crappy stupid Amazon Appstore.</p>
-        
-        <div class="app-list">
-            <div class="app-item">
-                <div class="app-info">
-                    <img src="Images/launcher-hijack.png" alt="Launcher Hijack" class="app-icon">
-                    <span>Launcher Hijack</span>
-                </div>
-                <a href="https://raw.githubusercontent.com/KitNeko/CatStore/main/Apps/launcher-hijack.apk" class="download-btn">Download</a>
+    <div class="kindle-main">
+        <div class="header-bar">
+            <div class="title-area">
+                <h1>Apps</h1>
+                <span class="tagline">Make your Fire, Your Fire</span>
             </div>
-            <div class="app-item">
-                <div class="app-info">
-                    <img src="Images/firefox.png" alt="Firefox" class="app-icon">
-                    <span>Firefox</span>
-                </div>
-                <a href="https://www.dropbox.com/scl/fi/5jou7sy8mf4hhx1yx4bj0/firefox.apk?rlkey=h65dpf3mtfpmmz8uvr5qo524u&st=jgdclijs&dl=1" class="download-btn">Download</a>
+            
+            <div class="switcher-pill">
+                <button class="switch-btn active">Cloud</button>
+                <button class="switch-btn">Device</button>
             </div>
-            <div class="app-item">
-                <div class="app-info">
-                    <img src="Images/opera-mini.png" alt="Opera Mini" class="app-icon">
-                    <span>Opera Mini</span>
-                </div>
-                <a href="https://raw.githubusercontent.com/KitNeko/CatStore/main/Apps/opera-mini.apk" class="download-btn">Download</a>
+
+            <a href="#" class="store-link">Store &gt;</a>
+        </div>
+
+        <div class="shelf-container">
+            <div class="shelf">
+                <a href="https://raw.githubusercontent.com/KitNeko/CatStore/main/Apps/launcher-hijack.apk" class="app-card">
+                    <div class="app-icon-wrapper">
+                        <img src="Images/launcher-hijack.png" alt="Launcher Hijack" class="app-icon">
+                        <div class="badge">✓</div>
+                    </div>
+                    <span class="app-name">Launcher Hijack</span>
+                </a>
+
+                <a href="https://www.dropbox.com/scl/fi/5jou7sy8mf4hhx1yx4bj0/firefox.apk?rlkey=h65dpf3mtfpmmz8uvr5qo524u&st=jgdclijs&dl=1" class="app-card">
+                    <div class="app-icon-wrapper">
+                        <img src="Images/firefox.png" alt="Firefox" class="app-icon">
+                        <div class="badge">✓</div>
+                    </div>
+                    <span class="app-name">Firefox</span>
+                </a>
+
+                <a href="https://raw.githubusercontent.com/KitNeko/CatStore/main/Apps/opera-mini.apk" class="app-card">
+                    <div class="app-icon-wrapper">
+                        <img src="Images/opera-mini.png" alt="Opera Mini" class="app-icon">
+                        <div class="badge">✓</div>
+                    </div>
+                    <span class="app-name">Opera Mini</span>
+                </a>
+
+                <a href="https://www.dropbox.com/scl/fi/nxno7nv8s9xda2aj4z29e/dolphin-master-4.0-4031.apk?rlkey=gi4jqe5rr7eugzj7euhehov6q&st=dsj8544q&dl=1" class="app-card">
+                    <div class="app-icon-wrapper">
+                        <img src="Images/dolphin.png" alt="Dolphin Emulator" class="app-icon">
+                        <div class="badge">✓</div>
+                    </div>
+                    <span class="app-name">Dolphin Emulator</span>
+                </a>
             </div>
-            <div class="app-item">
-                <div class="app-info">
-                    <img src="Images/dolphin.png" alt="Dolphin Emulator" class="app-icon">
-                    <span>Dolphin Emulator</span>
-                </div>
-                <a href="https://www.dropbox.com/scl/fi/nxno7nv8s9xda2aj4z29e/dolphin-master-4.0-4031.apk?rlkey=gi4jqe5rr7eugzj7euhehov6q&st=dsj8544q&dl=1" class="download-btn">Download</a>
-            </div>
+
+            <div class="shelf" style="min-height: 130px;"></div>
+        </div>
+    </div>
+
+    <div class="kindle-sidebar">
+        <div class="sidebar-group">
+            <button class="sidebar-btn" title="Favorites">⭐</button>
+        </div>
+        <div class="sidebar-group">
+            <button class="sidebar-btn" title="Search">🔍</button>
+            <button class="sidebar-btn" title="Menu">☰</button>
+            <button class="sidebar-btn" title="Back">⬅</button>
+        </div>
+        <div class="sidebar-group">
+            <button class="sidebar-btn" title="Home">🏠</button>
         </div>
     </div>
 
