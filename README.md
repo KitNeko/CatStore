@@ -5,6 +5,8 @@
 
 # CatStore is a app store built for Fire tablets that let's you download actual useful apps so you can grab what you need without the crappy stupid Amazon Appstore.
 
+# Based on the original Amazon Appstore Ui, Cuz why not?
+
 # Credits
 Launcher Hijack
 https://github.com/BaronKiko/LauncherHijack
@@ -17,3 +19,6 @@ https://www.opera.com/mini
 
 Firefox
 https://www.firefox.com
+
+Kodi
+https://kodi.tv/
