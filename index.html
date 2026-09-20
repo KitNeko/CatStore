@@ -58,6 +58,12 @@
             font-weight: 500;
         }
 
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
         .switcher-pill {
             display: flex;
             background: #111;
@@ -84,14 +90,110 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
         }
 
-        .store-link {
+        .source-btn {
+            background: #222;
+            border: 1px solid #444;
             color: #ddd;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 300;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
-        .store-link:hover {
+        .source-btn:hover {
+            background: #333;
             color: #ff9900;
+            border-color: #555;
+        }
+
+        /* Modal styling for Download from Source */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: linear-gradient(to bottom, #1f1f1f, #121212);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 30px;
+            width: 450px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 400;
+        }
+
+        .modal-desc {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .modal-input {
+            background: #0a0a0a;
+            border: 1px solid #444;
+            border-radius: 6px;
+            padding: 10px 14px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .modal-input:focus {
+            border-color: #ff9900;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .modal-cancel-btn {
+            background: #2a2a2a;
+            border: none;
+            color: #ccc;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .modal-cancel-btn:hover {
+            background: #3a3a3a;
+        }
+
+        .modal-download-btn {
+            background: #ff9900;
+            border: none;
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .modal-download-btn:hover {
+            background: #ffb13b;
         }
 
         .shelf-container {
@@ -270,12 +372,27 @@
                 <span class="tagline">Make your Fire, Your Fire</span>
             </div>
             
-            <div class="switcher-pill">
-                <button class="switch-btn active">Cloud</button>
-                <button class="switch-btn">Device</button>
-            </div>
+            <div class="header-right">
+                <div class="switcher-pill">
+                    <button class="switch-btn active">Cloud</button>
+                    <button class="switch-btn">Device</button>
+                </div>
 
-            <a href="#" class="store-link">Store &gt;</a>
+                <button class="source-btn" onclick="openSourceModal()">Download from Source</button>
+            </div>
+        </div>
+
+        <!-- Download from Source Modal Box -->
+        <div id="source-modal" class="modal-overlay">
+            <div class="modal-box">
+                <div class="modal-title">Download from Source</div>
+                <div class="modal-desc">Type or paste the direct download link below to fetch and download the file instantly.</div>
+                <input type="text" id="source-link-input" class="modal-input" placeholder="https://example.com/app.apk">
+                <div class="modal-actions">
+                    <button class="modal-cancel-btn" onclick="closeSourceModal()">Cancel</button>
+                    <button class="modal-download-btn" onclick="triggerSourceDownload()">Download</button>
+                </div>
+            </div>
         </div>
 
         <div id="home-view" class="shelf-container">
@@ -398,6 +515,32 @@
             const pages = document.querySelectorAll('.app-page');
             pages.forEach(p => p.classList.remove('active'));
             document.getElementById(appId + '-page').classList.add('active');
+        }
+
+        function openSourceModal() {
+            document.getElementById('source-modal').classList.add('active');
+            document.getElementById('source-link-input').focus();
+        }
+
+        function closeSourceModal() {
+            document.getElementById('source-modal').classList.remove('active');
+            document.getElementById('source-link-input').value = '';
+        }
+
+        function triggerSourceDownload() {
+            const linkInput = document.getElementById('source-link-input').value.trim();
+            if (linkInput) {
+                const a = document.createElement('a');
+                a.href = linkInput;
+                a.target = '_blank';
+                a.download = '';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                closeSourceModal();
+            } else {
+                alert('Please enter a valid link.');
+            }
         }
     </script>
 
