@@ -27,7 +27,6 @@
             padding: 24px 36px;
             position: relative;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-            border-right: 2px solid #222;
         }
 
         .header-bar {
@@ -49,6 +48,7 @@
             font-size: 2.2rem;
             font-weight: 300;
             letter-spacing: 0.5px;
+            cursor: pointer;
         }
 
         .tagline {
@@ -119,6 +119,7 @@
             text-decoration: none;
             width: 90px;
             position: relative;
+            cursor: pointer;
             transition: transform 0.1s ease;
         }
 
@@ -173,43 +174,90 @@
             width: 100%;
         }
 
-        .kindle-sidebar {
-            width: 70px;
-            background: #0f0f0f;
-            display: flex;
+        .app-page {
+            display: none;
             flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            padding: 25px 0;
-            border-left: 1px solid #1c1c1c;
+            gap: 20px;
+            animation: fadeIn 0.2s ease;
         }
 
-        .sidebar-group {
+        .app-page.active {
             display: flex;
-            flex-direction: column;
-            gap: 24px;
-            align-items: center;
         }
 
-        .sidebar-btn {
-            background: none;
-            border: none;
-            color: #999;
-            cursor: pointer;
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 44px;
-            height: 44px;
-            border-radius: 8px;
-            transition: background 0.2s, color 0.2s;
-            text-decoration: none;
-        }
-
-        .sidebar-btn:hover {
-            background: #1a1a1a;
+        .back-btn {
+            background: #222;
+            border: 1px solid #444;
             color: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            width: fit-content;
+        }
+
+        .back-btn:hover {
+            background: #333;
+        }
+
+        .app-details-container {
+            display: flex;
+            gap: 30px;
+            background: linear-gradient(to bottom, rgba(25,25,25,0.8), rgba(12,12,12,0.95));
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+        }
+
+        .app-details-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            object-fit: cover;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+        }
+
+        .app-details-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-grow: 1;
+        }
+
+        .app-details-title {
+            font-size: 1.8rem;
+            font-weight: 400;
+        }
+
+        .app-details-desc {
+            color: #aaa;
+            font-size: 1rem;
+            line-height: 1.5;
+            max-width: 600px;
+        }
+
+        .download-btn {
+            background: #ff9900;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 24px;
+            border-radius: 8px;
+            width: fit-content;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(255,153,0,0.3);
+            transition: background 0.2s;
+        }
+
+        .download-btn:hover {
+            background: #ffb13b;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -218,7 +266,7 @@
     <div class="kindle-main">
         <div class="header-bar">
             <div class="title-area">
-                <h1>Apps</h1>
+                <h1 onclick="showHome()">Apps</h1>
                 <span class="tagline">Make your Fire, Your Fire</span>
             </div>
             
@@ -230,58 +278,108 @@
             <a href="#" class="store-link">Store &gt;</a>
         </div>
 
-        <div class="shelf-container">
+        <div id="home-view" class="shelf-container">
             <div class="shelf">
-                <a href="https://raw.githubusercontent.com/KitNeko/CatStore/main/Apps/launcher-hijack.apk" class="app-card">
+                <div class="app-card" onclick="showApp('launcher-hijack')">
                     <div class="app-icon-wrapper">
                         <img src="Images/launcher-hijack.png" alt="Launcher Hijack" class="app-icon">
                         <div class="badge">✓</div>
                     </div>
                     <span class="app-name">Launcher Hijack</span>
-                </a>
+                </div>
 
-                <a href="https://www.dropbox.com/scl/fi/5jou7sy8mf4hhx1yx4bj0/firefox.apk?rlkey=h65dpf3mtfpmmz8uvr5qo524u&st=jgdclijs&dl=1" class="app-card">
+                <div class="app-card" onclick="showApp('firefox')">
                     <div class="app-icon-wrapper">
                         <img src="Images/firefox.png" alt="Firefox" class="app-icon">
                         <div class="badge">✓</div>
                     </div>
                     <span class="app-name">Firefox</span>
-                </a>
+                </div>
 
-                <a href="https://raw.githubusercontent.com/KitNeko/CatStore/main/Apps/opera-mini.apk" class="app-card">
+                <div class="app-card" onclick="showApp('opera-mini')">
                     <div class="app-icon-wrapper">
                         <img src="Images/opera-mini.png" alt="Opera Mini" class="app-icon">
                         <div class="badge">✓</div>
                     </div>
                     <span class="app-name">Opera Mini</span>
-                </a>
+                </div>
 
-                <a href="https://www.dropbox.com/scl/fi/nxno7nv8s9xda2aj4z29e/dolphin-master-4.0-4031.apk?rlkey=gi4jqe5rr7eugzj7euhehov6q&st=dsj8544q&dl=1" class="app-card">
+                <div class="app-card" onclick="showApp('dolphin')">
                     <div class="app-icon-wrapper">
                         <img src="Images/dolphin.png" alt="Dolphin Emulator" class="app-icon">
                         <div class="badge">✓</div>
                     </div>
                     <span class="app-name">Dolphin Emulator</span>
-                </a>
+                </div>
             </div>
 
             <div class="shelf" style="min-height: 130px;"></div>
         </div>
+
+        <div id="launcher-hijack-page" class="app-page">
+            <button class="back-btn" onclick="showHome()">&lt; Back to Apps</button>
+            <div class="app-details-container">
+                <img src="Images/launcher-hijack.png" class="app-details-icon" alt="Launcher Hijack">
+                <div class="app-details-info">
+                    <div class="app-details-title">Launcher Hijack</div>
+                    <div class="app-details-desc">Bypass the stock Fire OS home screen launcher limitation and use custom third-party launchers seamlessly on your Fire tablet without needing full root access.</div>
+                    <a href="https://raw.githubusercontent.com/KitNeko/CatStore/main/Apps/launcher-hijack.apk" class="download-btn">Download APK</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="firefox-page" class="app-page">
+            <button class="back-btn" onclick="showHome()">&lt; Back to Apps</button>
+            <div class="app-details-container">
+                <img src="Images/firefox.png" class="app-details-icon" alt="Firefox">
+                <div class="app-details-info">
+                    <div class="app-details-title">Firefox</div>
+                    <div class="app-details-desc">A fast, private, and secure web browser built for Android. Enjoy seamless tab management, extension support, and safe tracking protection on your device.</div>
+                    <a href="https://www.dropbox.com/scl/fi/5jou7sy8mf4hhx1yx4bj0/firefox.apk?rlkey=h65dpf3mtfpmmz8uvr5qo524u&st=jgdclijs&dl=1" class="download-btn">Download APK</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="opera-mini-page" class="app-page">
+            <button class="back-btn" onclick="showHome()">&lt; Back to Apps</button>
+            <div class="app-details-container">
+                <img src="Images/opera-mini.png" class="app-details-icon" alt="Opera Mini">
+                <div class="app-details-info">
+                    <div class="app-details-title">Opera Mini</div>
+                    <div class="app-details-desc">A data-saving, lightning-fast web browser designed to load pages smoothly even on slower connections while conserving your tablet's resources.</div>
+                    <a href="https://raw.githubusercontent.com/KitNeko/CatStore/main/Apps/opera-mini.apk" class="download-btn">Download APK</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="dolphin-page" class="app-page">
+            <button class="back-btn" onclick="showHome()">&lt; Back to Apps</button>
+            <div class="app-details-container">
+                <img src="Images/dolphin.png" class="app-details-icon" alt="Dolphin Emulator">
+                <div class="app-details-info">
+                    <div class="app-details-title">Dolphin Emulator</div>
+                    <div class="app-details-desc">Run classic console games with performance enhancements, custom controller layouts, and optimized rendering tools directly on compatible hardware.</div>
+                    <a href="https://www.dropbox.com/scl/fi/nxno7nv8s9xda2aj4z29e/dolphin-master-4.0-4031.apk?rlkey=gi4jqe5rr7eugzj7euhehov6q&st=dsj8544q&dl=1" class="download-btn">Download APK</a>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="kindle-sidebar">
-        <div class="sidebar-group">
-            <button class="sidebar-btn" title="Favorites">⭐</button>
-        </div>
-        <div class="sidebar-group">
-            <button class="sidebar-btn" title="Search">🔍</button>
-            <button class="sidebar-btn" title="Menu">☰</button>
-            <button class="sidebar-btn" title="Back">⬅</button>
-        </div>
-        <div class="sidebar-group">
-            <button class="sidebar-btn" title="Home">🏠</button>
-        </div>
-    </div>
+    <script>
+        function showHome() {
+            document.getElementById('home-view').style.display = 'flex';
+            const pages = document.querySelectorAll('.app-page');
+            pages.forEach(p => p.classList.remove('active'));
+        }
+
+        function showApp(appId) {
+            document.getElementById('home-view').style.display = 'none';
+            const pages = document.querySelectorAll('.app-page');
+            pages.forEach(p => p.classList.remove('active'));
+            document.getElementById(appId + '-page').classList.add('active');
+        }
+    </script>
 
 </body>
 </html>
